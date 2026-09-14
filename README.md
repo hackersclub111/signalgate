@@ -20,6 +20,8 @@ Most disaster detection systems naively pass sensor thresholds to cloud LLMs or 
 **The SignalGate Innovation:**  
 Rather than naively classifying events, SignalGate implements **Dempster-Shafer Theory of Evidence (DST)** over a 3-state triage decision engine. It quantifies **Epistemic Ignorance ($m(\Theta)$)** and **Inter-Sensor Conflict ($K$)**. When sensor evidence is contradictory or ambiguous, the network **actively refuses to dispatch a false alarm**, commanding decentralized field nodes to seek spatial corroboration before escalating to Incident Command.
 
+![SignalGate Architecture Specification](assets/architecture_infographic.png)
+
 ```text
                              INCOMING PHYSICAL SIGNALS
                       ┌───────────────────┬───────────────────┐
