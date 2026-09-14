@@ -7,7 +7,16 @@
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Tests: 15/15 Pass](https://img.shields.io/badge/Tests-15%2F15%20PASS-brightgreen.svg)]()
 [![Measured Latency](https://img.shields.io/badge/Latency-0.24ms%20(Sub--1ms)-success.svg)]()
-[![Offline Safe](https://img.shields.io/badge/Internet-SEVERED%20(100%25%20Local)-critical.svg)]()
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blueviolet.svg)](https://hackersclub111.github.io/signalgate/)
+
+---
+
+## 🌐 Live Interactive Judge Testbench
+
+> 🚀 **Instant 1-Click Evaluation URL (No Local Setup Required):**  
+> 👉 **[https://hackersclub111.github.io/signalgate/](https://hackersclub111.github.io/signalgate/)**  
+> 
+> *Runs 24/7 in-browser on mobile or desktop: Click the interactive sensor triggers, observe real-time FFT waveforms on the oscilloscope, inject contradictory evidence to witness $K=0.70$ refusal, and run the 50-scenario chaos suite live!*
 
 ---
 
