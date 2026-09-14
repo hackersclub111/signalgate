@@ -48,3 +48,6 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Video Production Temp Directory
+temp_demo_build/

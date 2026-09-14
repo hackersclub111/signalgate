@@ -6,8 +6,29 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Tests: 15/15 Pass](https://img.shields.io/badge/Tests-15%2F15%20PASS-brightgreen.svg)]()
-[![Measured Latency](https://img.shields.io/badge/Latency-0.22ms%20(Sub--1ms)-success.svg)]()
+[![Measured Latency](https://img.shields.io/badge/Latency-0.24ms%20(Sub--1ms)-success.svg)]()
 [![Offline Safe](https://img.shields.io/badge/Internet-SEVERED%20(100%25%20Local)-critical.svg)]()
+
+---
+
+## 🎥 Demonstration Video (1080p Broadcast Quality)
+
+> **Watch the full 93-second demonstration video directly in the repository:**  
+> 📹 **Local Video File:** [`assets/demo/signalgate_demo.mp4`](assets/demo/signalgate_demo.mp4) *(93.9 seconds • 18.59 MB • 1080p H.264 / Studio Neural Narration)*
+
+### Video Structure & Ground-Truth Verification:
+1. **Scene 01 (00:00 - 00:13):** Emergency Triage Architecture Grounding & Offline Thesis (Synthetic Sensor Testbench / Real Evidential Kernel).
+2. **Scene 02 (00:13 - 00:27):** Framework-Light Acoustic DSP — Pure NumPy Sliding FFT (0.17ms) detecting 492 Hz Morse tap cadence on live oscilloscope.
+3. **Scene 03 (00:27 - 00:39):** Offline Multilingual Crisis Lexicon — Spotting Tagalog distress ("Tulong!") in 0.04ms across 5 vulnerable dialects.
+4. **Scene 04 (00:39 - 00:58) [HERO MOMENT]:** Evidential Arbitration & Active Refusal — Contradictory sensors yield Conflict $K=0.70$, actively refusing false dispatch and holding for corroboration.
+5. **Scene 05 (00:58 - 01:13):** Multi-Node Spatial Corroboration — Node 2 seismic cadence confirms victim, escalating incident to P0 DISPATCH with HMAC-SHA256 signature receipt.
+6. **Scene 06 (01:13 - 01:27):** Automated Proof Suite — 50-scenario chaos mode (0 false dispatches on 25 conflict pairs) and 15/15 automated unit tests passing in 0.23s.
+7. **Scene 07 (01:27 - 01:34):** Outro Hero Card — *"Don't dispatch on uncorroborated evidence."*
+
+> **Judge Re-recording Command:** Judges can deterministically re-record this entire 1080p video from scratch against the live system at any time with zero manual intervention:
+> ```bash
+> python scripts/record_demo.py
+> ```
 
 ---
 
@@ -68,12 +89,12 @@ All latency figures are **dynamically measured** via `python run.py --benchmark`
 
 | Subsystem Component | Measured Latency | Memory Footprint | Audit Status |
 |---|---|---|---|
-| **1. Sliding Window FFT (DSP)** | `0.14 ms` | `< 4 MB` | `PASS` (Pure NumPy, 0-dependency) |
-| **2. Crisis NLP Spotter (Dialect Lexicon)** | `0.05 ms` | `< 2 MB` | `PASS` (5 vulnerable dialects) |
+| **1. Sliding Window FFT (DSP)** | `0.17 ms` | `< 4 MB` | `PASS` (Pure NumPy, 0-dependency) |
+| **2. Crisis NLP Spotter (Dialect Lexicon)** | `0.04 ms` | `< 2 MB` | `PASS` (5 vulnerable dialects) |
 | **3. Dempster-Shafer Fusion (DST)** | `0.01 ms` | `< 0.1 MB` | `PASS` (Frame $\Omega = \{V, N, H\}$) |
 | **4. Triage Arbitration + HMAC** | `0.02 ms` | `< 0.1 MB` | `PASS` (HMAC-SHA256 receipt) |
 | **5. P2P Mesh Hop Packet Simulation** | `0.001 ms` | `< 0.2 MB` | `PASS` (Multi-hop routing) |
-| **TOTAL END-TO-END PIPELINE** | **`0.22 ms`** | **`< 10 MB RAM`** | **`REAL-TIME SUB-MILLISECOND`** |
+| **TOTAL END-TO-END PIPELINE** | **`0.24 ms`** | **`< 10 MB RAM`** | **`REAL-TIME SUB-MILLISECOND`** |
 
 *Raw benchmark JSON generated at `BENCHMARK_RESULTS.json`.*
 

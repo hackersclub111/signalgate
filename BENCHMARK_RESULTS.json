@@ -1,15 +1,15 @@
 {
-  "timestamp": 1789348069.9374,
+  "timestamp": 1789406645.4286664,
   "host_platform": "Windows 11",
   "python_version": "3.12.10",
   "iterations": 50,
   "measured_latency_ms": {
-    "dsp_sliding_fft": 0.118,
-    "crisis_nlp_spotter": 0.046,
+    "dsp_sliding_fft": 0.166,
+    "crisis_nlp_spotter": 0.043,
     "dempster_shafer_fusion": 0.008,
-    "triage_arbitration_hmac": 0.015,
+    "triage_arbitration_hmac": 0.018,
     "mesh_hop_routing": 0.001,
-    "total_end_to_end": 0.188
+    "total_end_to_end": 0.236
   },
   "verdict": "SUB_10MS_REAL_TIME_PASS"
 }
