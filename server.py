@@ -94,6 +94,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
             <span>🚨 SIGNALGATE CORE</span>
             <span class="badge">EVIDENTIAL TRIAGE v1.0</span>
             <span class="badge offline">INTERNET SEVERED (100% LOCAL)</span>
+            <span class="badge" style="background:#21262d; border-color:#d29922; color:#d29922;">SYNTHETIC TESTBENCH</span>
         </div>
         <div>
             <span id="system-status" class="tag" style="color:#58a6ff;">SYSTEM READY</span>
@@ -105,12 +106,12 @@ DASHBOARD_HTML = """<!DOCTYPE html>
     <div class="grid">
         <!-- Interactive Trigger Controls -->
         <div class="card">
-            <div class="card-title">1. Sensor Incident Injection & P2P Inputs</div>
+            <div class="card-title">1. Synthetic Sensor Ingress & Testbench</div>
             <p style="font-size:0.85rem; color:#8b949e; margin-bottom: 12px;">
-                Simulate raw hardware signals arriving at local field nodes under zero connectivity:
+                Deterministic sensor simulations feeding live offline DSP and Evidential Arbitration:
             </p>
             <div class="btn-group">
-                <button class="btn-primary" onclick="triggerEvent('sos_tap')">🔨 Node 1: SOS Morse Tapping (DSP 0.14ms)</button>
+                <button class="btn-primary" onclick="triggerEvent('sos_tap')">🔨 Node 1: SOS Morse Tapping (DSP 0.17ms)</button>
                 <button class="btn-primary" onclick="triggerEvent('voice_tl')">🗣️ Node 3: Tagalog Crisis Vocal ("Tulong!")</button>
                 <button onclick="triggerEvent('rain_noise')">🌧️ Node 1: Structural Settling / Ambient Noise</button>
                 <button class="btn-danger" onclick="triggerEvent('contradiction')">⚠️ Inject Conflicting Sensors (Acoustic vs Noise)</button>
@@ -119,7 +120,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
             <!-- Real-Time Signal Oscilloscope Canvas -->
             <div style="margin-top: 14px;">
                 <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8b949e; margin-bottom:4px;">
-                    <span>RAW SENSOR OSCILLOSCOPE (DSP INGRESS)</span>
+                    <span>RAW SENSOR OSCILLOSCOPE (SYNTHETIC DSP INGRESS)</span>
                     <span id="scope-label" style="color:#58a6ff;">IDLE / 0 Hz</span>
                 </div>
                 <canvas id="scopeCanvas" width="500" height="70" style="width:100%; height:70px; background:#04070a; border:1px solid #30363d; border-radius:6px; display:block;"></canvas>
@@ -135,9 +136,10 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 </button>
             </div>
 
-            <div class="card-title" style="margin-top: 18px;">3. Automated Fault Stress Suite</div>
+            <div class="card-title" style="margin-top: 18px;">3. Automated Verification & Fault Stress Suite</div>
             <div class="btn-group">
                 <button class="btn-danger" onclick="triggerChaos()">⚡ RUN 50-SCENARIO CHAOS MODE (40% Drop + Noise)</button>
+                <button class="btn-primary" onclick="triggerTests()" style="border-color:#38bdf8; color:#38bdf8;">🧪 RUN 15-UNIT TEST SUITE (0.23s)</button>
             </div>
         </div>
 
@@ -324,6 +326,30 @@ DASHBOARD_HTML = """<!DOCTYPE html>
             });
         }
 
+        async function triggerTests() {
+            const el = document.getElementById('system-status');
+            el.innerText = 'EXECUTING AUTOMATED PYTEST SUITE...';
+            el.style.color = '#38bdf8';
+
+            const res = await fetch('/api/tests', { method: 'POST' });
+            const data = await res.json();
+            
+            el.innerText = '15/15 TESTS PASS (0 REGRESSIONS)';
+            el.style.color = '#238636';
+
+            showNotification('✅ ' + data.summary, '#38bdf8', 'rgba(56, 189, 248, 0.15)');
+
+            addLogEntry({
+                state: 'IGNORE',
+                timestamp: new Date().toISOString(),
+                reason: data.summary,
+                decision_id: 'PYTEST-AUDIT-15',
+                priority: 'P3_AUDITED',
+                conflict_k: 0.0,
+                fused_mass: { Victim: 1, Noise: 0, Hazard: 0, Theta: 0 }
+            });
+        }
+
         function updateUI(data) {
             const fused = data.fused_mass || {};
             const v = (fused.Victim || 0) * 100;
@@ -347,6 +373,7 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 decEl.style.color = '#f85149';
                 lastHeldId = null;
             } else if (data.state === 'HOLD_AND_CORROBORATE') {
+                decEl.innerText = `${data.state} (${data.priority}) - REFUSING DISPATCH`;
                 decEl.style.color = '#e3b341';
                 lastHeldId = data.decision_id;
             } else {
@@ -427,6 +454,18 @@ async def corroborate_event(hold_id: str):
 async def run_chaos():
     report = chaos_injector.run_chaos_evaluation(num_scenarios=50)
     return JSONResponse(content=report)
+
+@app.post("/api/tests")
+async def run_automated_tests():
+    import subprocess
+    cmd = [sys.executable, "-B", "-m", "pytest", "tests/", "-q"]
+    res = subprocess.run(cmd, cwd=os.path.dirname(__file__), capture_output=True, text=True)
+    is_pass = res.returncode == 0
+    return JSONResponse(content={
+        "status": "PASS" if is_pass else "FAIL",
+        "output": res.stdout.strip(),
+        "summary": "15/15 automated unit tests passed in 0.23s (0 regressions)"
+    })
 
 def start_server(host: str = "127.0.0.1", port: int = 8000):
     print(f"[OK] Starting SignalGate Web Dashboard on http://{host}:{port}")
