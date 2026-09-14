@@ -1,0 +1,223 @@
+{
+  "metadata": {
+    "generator": "Adaption Labs Multilingual Synthetic Engine",
+    "purpose": "Crisis Speech & Text Keyword Spotting under Disaster Blackout",
+    "languages": [
+      "tl",
+      "ht",
+      "uk",
+      "tr",
+      "es"
+    ],
+    "generated_at": "2026-09-13T21:51:59.285180+00:00",
+    "total_variants": 25,
+    "sample_rate_hz": 16000
+  },
+  "dialects": {
+    "tl": {
+      "language": "Tagalog",
+      "region": "Philippines (Typhoon / Seismic)",
+      "keywords": [
+        {
+          "phrase": "Tulong! Natabunan kami",
+          "english": "Help! We are buried/trapped",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.92
+        },
+        {
+          "phrase": "May gumuhong pader",
+          "english": "A wall collapsed",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.85
+        },
+        {
+          "phrase": "Hindi makahinga ang kasama ko",
+          "english": "My companion cannot breathe",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.95
+        },
+        {
+          "phrase": "Dito kami sa ilalim",
+          "english": "We are here underneath",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.88
+        },
+        {
+          "phrase": "Medyo maingay ang ulan pero ligtas kami",
+          "english": "Heavy rain but we are safe",
+          "urgency": "P3",
+          "casualty_hint": false,
+          "mass_victim": 0.1
+        }
+      ]
+    },
+    "ht": {
+      "language": "Haitian Creole",
+      "region": "Haiti (Seismic / Hurricane)",
+      "keywords": [
+        {
+          "phrase": "Tanpri ede m! M anba dekonb yo",
+          "english": "Please help me! I am under rubble",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.94
+        },
+        {
+          "phrase": "Nou bloke nan kay la",
+          "english": "We are trapped in the house",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.89
+        },
+        {
+          "phrase": "M blese grav nan tèt",
+          "english": "I am severely injured in the head",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.93
+        },
+        {
+          "phrase": "Gen timoun ki bloke la a",
+          "english": "There are children trapped here",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.96
+        },
+        {
+          "phrase": "Se bri van sèlman, pa gen moun blese",
+          "english": "Just wind noise, no one is injured",
+          "urgency": "P3",
+          "casualty_hint": false,
+          "mass_victim": 0.08
+        }
+      ]
+    },
+    "uk": {
+      "language": "Ukrainian",
+      "region": "Ukraine (Structural Collapse / Blast Trauma)",
+      "keywords": [
+        {
+          "phrase": "Допоможіть! Ми під завалами",
+          "english": "Help! We are under rubble",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.95
+        },
+        {
+          "phrase": "Тут поранені, потрібен турнікет",
+          "english": "Injured here, need tourniquet",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.96
+        },
+        {
+          "phrase": "Не можу дихати від пилу",
+          "english": "Cannot breathe from the dust",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.89
+        },
+        {
+          "phrase": "Ми в підвалі, вихід завалений",
+          "english": "We are in the basement, exit blocked",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.92
+        },
+        {
+          "phrase": "Просто впали меблі, все гаразд",
+          "english": "Furniture fell over, everything is fine",
+          "urgency": "P3",
+          "casualty_hint": false,
+          "mass_victim": 0.12
+        }
+      ]
+    },
+    "tr": {
+      "language": "Turkish",
+      "region": "Turkey (Anatolian Fault / Seismic)",
+      "keywords": [
+        {
+          "phrase": "İmdat! Enkaz altındayız",
+          "english": "Help! We are under the rubble",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.95
+        },
+        {
+          "phrase": "Sesimi duyan var mı?",
+          "english": "Is anyone hearing my voice? (Survivor call)",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.9
+        },
+        {
+          "phrase": "Buradayım! İkinci kattayım",
+          "english": "I am here! Second floor",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.88
+        },
+        {
+          "phrase": "Nefes alamıyorum, acele edin",
+          "english": "I cannot breathe, hurry",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.96
+        },
+        {
+          "phrase": "Jeneratör sesi geliyor, tehlike yok",
+          "english": "Generator sound, no immediate danger",
+          "urgency": "P3",
+          "casualty_hint": false,
+          "mass_victim": 0.15
+        }
+      ]
+    },
+    "es": {
+      "language": "Spanish",
+      "region": "Latin America / Global (Seismic / Flood)",
+      "keywords": [
+        {
+          "phrase": "¡Ayuda! Estamos atrapados bajo los escombros",
+          "english": "Help! We are trapped under rubble",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.95
+        },
+        {
+          "phrase": "Colapsó la escalera, no podemos bajar",
+          "english": "Staircase collapsed, cannot get down",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.87
+        },
+        {
+          "phrase": "Hay una fuga de gas y personas inconscientes",
+          "english": "Gas leak and unconscious people",
+          "urgency": "P0",
+          "casualty_hint": true,
+          "mass_victim": 0.98
+        },
+        {
+          "phrase": "Golpeamos la tubería tres veces",
+          "english": "We tap the pipe three times",
+          "urgency": "P1",
+          "casualty_hint": true,
+          "mass_victim": 0.9
+        },
+        {
+          "phrase": "Solo fue un susto, las paredes están intactas",
+          "english": "Just a scare, walls are intact",
+          "urgency": "P3",
+          "casualty_hint": false,
+          "mass_victim": 0.05
+        }
+      ]
+    }
+  }
+}

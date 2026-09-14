@@ -1,0 +1,16 @@
+{
+  "sponsor": "Adaption Labs",
+  "dataset_file": "crisis_lexicon_5_dialects.json",
+  "sha256": "5004bde6abb3238fc6e8cec188b5b3f84be2a49a076afb5f253efad86c89c166",
+  "languages_count": 5,
+  "dialects": [
+    "Tagalog (tl)",
+    "Haitian Creole (ht)",
+    "Ukrainian (uk)",
+    "Turkish (tr)",
+    "Spanish (es)"
+  ],
+  "total_entries": 25,
+  "status": "VALIDATED_SYNTHETIC_CORPUS",
+  "created_at": "2026-09-13T21:51:59.296547+00:00"
+}
