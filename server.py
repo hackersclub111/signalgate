@@ -100,6 +100,8 @@ DASHBOARD_HTML = """<!DOCTYPE html>
         </div>
     </header>
 
+    <div id="tactical-banner" style="display:none; padding:12px 16px; border-radius:6px; margin-bottom:15px; font-weight:600; font-size:0.9rem; border:1px solid #30363d;"></div>
+
     <div class="grid">
         <!-- Interactive Trigger Controls -->
         <div class="card">
@@ -112,6 +114,15 @@ DASHBOARD_HTML = """<!DOCTYPE html>
                 <button class="btn-primary" onclick="triggerEvent('voice_tl')">🗣️ Node 3: Tagalog Crisis Vocal ("Tulong!")</button>
                 <button onclick="triggerEvent('rain_noise')">🌧️ Node 1: Structural Settling / Ambient Noise</button>
                 <button class="btn-danger" onclick="triggerEvent('contradiction')">⚠️ Inject Conflicting Sensors (Acoustic vs Noise)</button>
+            </div>
+
+            <!-- Real-Time Signal Oscilloscope Canvas -->
+            <div style="margin-top: 14px;">
+                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8b949e; margin-bottom:4px;">
+                    <span>RAW SENSOR OSCILLOSCOPE (DSP INGRESS)</span>
+                    <span id="scope-label" style="color:#58a6ff;">IDLE / 0 Hz</span>
+                </div>
+                <canvas id="scopeCanvas" width="500" height="70" style="width:100%; height:70px; background:#04070a; border:1px solid #30363d; border-radius:6px; display:block;"></canvas>
             </div>
 
             <div class="card-title" style="margin-top: 18px;">2. Multi-Node Corroboration</div>
@@ -179,8 +190,95 @@ DASHBOARD_HTML = """<!DOCTYPE html>
 
     <script>
         let lastHeldId = null;
+        let signalMode = 'idle';
+        let signalTime = 0;
+
+        // --- Tactical Notification Helper (Replaces ugly browser alert) ---
+        function showNotification(msg, borderColor, bgColor = 'rgba(22, 27, 34, 0.95)') {
+            const b = document.getElementById('tactical-banner');
+            b.innerText = msg;
+            b.style.display = 'block';
+            b.style.borderColor = borderColor;
+            b.style.color = borderColor;
+            b.style.backgroundColor = bgColor;
+            setTimeout(() => { b.style.display = 'none'; }, 6000);
+        }
+
+        // --- Live Oscilloscope Visualizer ---
+        const canvas = document.getElementById('scopeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function drawScope() {
+            requestAnimationFrame(drawScope);
+            signalTime += 0.05;
+            ctx.fillStyle = '#04070a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid lines
+            ctx.strokeStyle = '#161b22';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let x = 0; x < canvas.width; x += 50) { ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); }
+            for (let y = 0; y < canvas.height; y += 25) { ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); }
+            ctx.stroke();
+
+            // Draw waveform
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            const cy = canvas.height / 2;
+
+            if (signalMode === 'sos') {
+                ctx.strokeStyle = '#58a6ff';
+                for (let x = 0; x < canvas.width; x++) {
+                    const env = Math.sin((x * 0.02) + signalTime * 3) > 0 ? 1 : 0.1;
+                    const y = cy + Math.sin(x * 0.15 + signalTime * 8) * 22 * env;
+                    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+            } else if (signalMode === 'noise' || signalMode === 'conflict') {
+                ctx.strokeStyle = signalMode === 'conflict' ? '#d29922' : '#8b949e';
+                for (let x = 0; x < canvas.width; x++) {
+                    const noise = (Math.random() - 0.5) * 35;
+                    const y = cy + noise;
+                    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+            } else if (signalMode === 'vocal') {
+                ctx.strokeStyle = '#3fb950';
+                for (let x = 0; x < canvas.width; x++) {
+                    const envelope = Math.sin(x * 0.03 + signalTime * 2);
+                    const y = cy + Math.sin(x * 0.08 + signalTime * 5) * 24 * envelope;
+                    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+            } else {
+                ctx.strokeStyle = '#30363d';
+                for (let x = 0; x < canvas.width; x++) {
+                    const y = cy + Math.sin(x * 0.02 + signalTime) * 3;
+                    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+        drawScope();
 
         async function triggerEvent(type) {
+            const scopeLbl = document.getElementById('scope-label');
+            if (type === 'sos_tap') {
+                signalMode = 'sos';
+                scopeLbl.innerText = '492 Hz SOS CADENCE DETECTED (DSP 0.14ms)';
+                scopeLbl.style.color = '#58a6ff';
+            } else if (type === 'voice_tl') {
+                signalMode = 'vocal';
+                scopeLbl.innerText = 'TAGALOG DISTRESS VOCAL ("Tulong!") MATCHED (0.05ms)';
+                scopeLbl.style.color = '#3fb950';
+            } else if (type === 'rain_noise') {
+                signalMode = 'noise';
+                scopeLbl.innerText = 'BROADBAND AMBIENT STRUCTURAL NOISE DETECTED';
+                scopeLbl.style.color = '#8b949e';
+            } else if (type === 'contradiction') {
+                signalMode = 'conflict';
+                scopeLbl.innerText = '⚠️ SENSOR CONTRADICTION: ACOUSTIC TAP vs CRANE NOISE';
+                scopeLbl.style.color = '#d29922';
+            }
+
             const res = await fetch(`/api/trigger?type=${type}`, { method: 'POST' });
             const data = await res.json();
             updateUI(data);
@@ -188,23 +286,33 @@ DASHBOARD_HTML = """<!DOCTYPE html>
 
         async function triggerCorroboration() {
             if (!lastHeldId) {
-                alert('No pending incident is currently held for corroboration! Click an ambiguous or SOS event first.');
+                showNotification('⚠️ No incident is currently held! Click "Inject Conflicting Sensors" or an ambiguous signal first.', '#d29922');
                 return;
             }
+            signalMode = 'sos';
+            document.getElementById('scope-label').innerText = 'NODE 2: SPATIAL SEISMIC CORROBORATION ARRIVED';
+            document.getElementById('scope-label').style.color = '#f85149';
+
             const res = await fetch(`/api/corroborate?hold_id=${lastHeldId}`, { method: 'POST' });
             const data = await res.json();
             updateUI(data);
+            showNotification(`🤝 Node 2 Corroboration Confirmed -> Incident escalated to ${data.state} (${data.priority}) with HMAC-SHA256 signature.`, '#f85149');
         }
 
         async function triggerChaos() {
             const el = document.getElementById('system-status');
             el.innerText = 'EXECUTING 50 CHAOS SCENARIOS...';
             el.style.color = '#f85149';
+            signalMode = 'conflict';
+
             const res = await fetch('/api/chaos', { method: 'POST' });
             const data = await res.json();
-            alert(data.summary);
+            
             el.innerText = 'CHAOS EVALUATION COMPLETE (0 FALSE DISPATCHES)';
             el.style.color = '#238636';
+
+            showNotification(`⚡ ${data.summary}`, '#238636', 'rgba(35, 134, 54, 0.15)');
+
             addLogEntry({
                 state: 'IGNORE',
                 timestamp: new Date().toISOString(),
@@ -321,7 +429,7 @@ async def run_chaos():
     return JSONResponse(content=report)
 
 def start_server(host: str = "127.0.0.1", port: int = 8000):
-    print(f"[OK] Starting ResQ-Mesh Web Dashboard on http://{host}:{port}")
+    print(f"[OK] Starting SignalGate Web Dashboard on http://{host}:{port}")
     uvicorn.run(app, host=host, port=port, log_level="info")
 
 if __name__ == "__main__":
